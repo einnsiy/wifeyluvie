@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html lang="tl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Para kay Wifey Luvie</title>
+<meta name="description" content="Isang sulat para kay Kassandra Andrielle Borejon VillaLobos.">
+<meta name="theme-color" content="#EADFF8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Italianno&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --lilac: #EADFF8;
+    --blush: #FCDDEB;
+    --paper: #FFFBFD;
+    --ink: #4A2B5C;
+    --plum: #8A3F7F;
+    --button: #B83A74;
+    --button-soft: #F6D3E5;
+    --leaf: #86B79A;
+    --petal-pink: #F58FB5;
+    --petal-pink-d: #E26A99;
+  }
+
+  * { box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    margin: 0;
+    min-height: 100vh;
+    background: linear-gradient(165deg, var(--lilac) 0%, #F2DDF3 50%, var(--blush) 100%) fixed;
+    color: var(--ink);
+    font-family: "Newsreader", Georgia, "Times New Roman", serif;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+
+  [hidden] { display: none !important; }
+
+  /* ---------- Opening ---------- */
+  .hero {
+    min-height: 100svh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    padding: 2rem 1.25rem;
+    text-align: center;
+  }
+
+  .hero h1 {
+    margin: 0;
+    font-family: "Italianno", "Brush Script MT", cursive;
+    font-weight: 400;
+    font-size: clamp(3.4rem, 15vw, 6rem);
+    line-height: 1;
+    color: var(--plum);
+  }
+
+  .hero .fullname {
+    margin: 0;
+    font-size: 1.05rem;
+    font-style: italic;
+    opacity: .85;
+  }
+
+  .hero-tulip {
+    appearance: none;
+    background: none;
+    border: 0;
+    padding: 0;
+    margin: 1.2rem 0 .2rem;
+    cursor: pointer;
+    width: min(190px, 48vw);
+    border-radius: 24px;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .hero-tulip:focus-visible { outline: 3px solid var(--button); outline-offset: 8px; }
+
+  .hero-tulip svg { display: block; width: 100%; height: auto; overflow: visible; }
+
+  .hero:not(.opened) .hero-tulip { animation: breathe 3.2s ease-in-out infinite; }
+
+  @keyframes breathe {
+    0%, 100% { transform: translateY(0) scale(1); }
+    50% { transform: translateY(-6px) scale(1.03); }
+  }
+
+  .hint { margin: 0; font-size: 1.05rem; opacity: .9; }
+
+  /* ---------- Tulips & blossoms ---------- */
+  .tulip, .blossom { overflow: visible; }
+
+  .tulip .stem {
+    fill: none;
+    stroke: var(--leaf);
+    stroke-width: 4;
+    stroke-linecap: round;
+    stroke-dasharray: 1;
+    stroke-dashoffset: 1;
+    transition: stroke-dashoffset .9s ease calc(var(--d, 0s));
+  }
+
+  .tulip .leaf, .blossom .stem2 {
+    fill: var(--leaf);
+    transform-box: fill-box;
+    transform-origin: 50% 100%;
+    transform: scale(0);
+    transition: transform .8s cubic-bezier(.3, 1.3, .5, 1) calc(var(--d, 0s) + .45s);
+  }
+
+  .tulip .pl, .tulip .pr, .tulip .pc {
+    transform-box: fill-box;
+    transform-origin: 50% 100%;
+    transition: transform 1.1s cubic-bezier(.3, 1.4, .5, 1) calc(var(--d, 0s) + .8s);
+  }
+  .tulip .pl { fill: var(--p2); transform: rotate(26deg); }
+  .tulip .pr { fill: var(--p2); transform: rotate(-26deg); }
+  .tulip .pc { fill: var(--p1); transform: scale(.88); }
+
+  .blossom .bl {
+    fill: var(--p1);
+    transform-box: fill-box;
+    transform-origin: 50% 50%;
+  }
+  .blossom .bloom-g {
+    transform-box: fill-box;
+    transform-origin: 50% 50%;
+    transform: scale(0) rotate(-60deg);
+    transition: transform 1s cubic-bezier(.3, 1.3, .5, 1) calc(var(--d, 0s) + .7s);
+  }
+  .blossom .stem2 { fill: none; stroke: var(--leaf); stroke-width: 3; stroke-linecap: round; transform: none; stroke-dasharray: 1; stroke-dashoffset: 1; transition: stroke-dashoffset .7s ease calc(var(--d, 0s)); }
+  .blossom .core { fill: #FFE08A; }
+
+  .active .tulip .stem, .opened .tulip .stem, .active .blossom .stem2 { stroke-dashoffset: 0; }
+  .active .tulip .leaf, .opened .tulip .leaf { transform: scale(1); }
+  .active .tulip .pl, .active .tulip .pr, .active .tulip .pc,
+  .opened .tulip .pl, .opened .tulip .pr, .opened .tulip .pc { transform: none; }
+  .active .blossom .bloom-g { transform: scale(1) rotate(0); }
+
+  .wiggle { animation: wiggle .9s ease; transform-origin: 50% 100%; }
+  @keyframes wiggle {
+    0%, 100% { transform: rotate(0); }
+    25% { transform: rotate(-6deg); }
+    55% { transform: rotate(5deg); }
+    80% { transform: rotate(-2deg); }
+  }
+
+  .garden {
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    gap: clamp(.4rem, 3vw, 1.2rem);
+    height: 150px;
+    margin: 0 auto 1.4rem;
+  }
+  .garden .tulip { height: 140px; width: auto; cursor: pointer; -webkit-tap-highlight-color: transparent; }
+  .garden .blossom { height: 78px; width: auto; cursor: pointer; -webkit-tap-highlight-color: transparent; }
+  .garden.big { height: 190px; }
+  .garden.big .tulip { height: 180px; }
+  .garden.big .blossom { height: 100px; }
+
+  /* ---------- Pages ---------- */
+  .book { padding: 1.25rem 1rem 8.5rem; }
+
+  .page {
+    max-width: 40rem;
+    margin: 0 auto;
+    background: var(--paper);
+    padding: clamp(1.5rem, 5vw, 3rem) clamp(1.3rem, 6vw, 3.4rem) clamp(1.8rem, 5vw, 3rem);
+    border-radius: 22px;
+    box-shadow: 0 30px 60px -30px rgba(120, 60, 130, .45);
+    font-size: clamp(1.08rem, 1rem + .35vw, 1.22rem);
+    line-height: 1.85;
+  }
+
+  .page p { margin: 0 0 1.35em; text-wrap: pretty; }
+  .page p:last-child { margin-bottom: 0; }
+
+  .page .salutation {
+    font-family: "Italianno", "Brush Script MT", cursive;
+    font-size: clamp(2.3rem, 8vw, 3.4rem);
+    line-height: 1.15;
+    color: var(--plum);
+    margin-bottom: .9em;
+  }
+
+  .page .closing { color: var(--plum); font-style: italic; }
+
+  .page.enter-next { animation: inNext .7s cubic-bezier(.2, .8, .2, 1) both; }
+  .page.enter-prev { animation: inPrev .7s cubic-bezier(.2, .8, .2, 1) both; }
+
+  @keyframes inNext { from { opacity: 0; transform: translateX(36px); } to { opacity: 1; transform: none; } }
+  @keyframes inPrev { from { opacity: 0; transform: translateX(-36px); } to { opacity: 1; transform: none; } }
+
+  /* ---------- Navigation ---------- */
+  .nav {
+    position: fixed;
+    left: 0; right: 0; bottom: 0;
+    padding: .9rem 1rem calc(.9rem + env(safe-area-inset-bottom));
+    background: rgba(255, 251, 253, .82);
+    -webkit-backdrop-filter: blur(12px);
+    backdrop-filter: blur(12px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: .8rem;
+    z-index: 10;
+  }
+
+  .nav .progress {
+    position: absolute;
+    top: 0; left: 0;
+    height: 3px;
+    width: 0;
+    background: linear-gradient(90deg, #C9A5EE, var(--petal-pink-d));
+    transition: width .6s ease;
+  }
+
+  .nav .count {
+    min-width: 4.2rem;
+    text-align: center;
+    font-size: 1rem;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .btn {
+    appearance: none;
+    border: 0;
+    font: inherit;
+    font-size: 1.05rem;
+    padding: .75rem 1.5rem;
+    border-radius: 999px;
+    cursor: pointer;
+    min-width: 7.2rem;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .btn:focus-visible { outline: 3px solid var(--ink); outline-offset: 3px; }
+  .btn.next { background: var(--button); color: #fff; }
+  .btn.prev { background: var(--button-soft); color: var(--ink); }
+  .btn[disabled] { opacity: .35; cursor: default; }
+
+  /* ---------- Falling petals ---------- */
+  .fall {
+    position: fixed;
+    top: -6vh;
+    width: var(--s);
+    height: calc(var(--s) * 1.3);
+    background: var(--c);
+    border-radius: 80% 0 80% 0;
+    pointer-events: none;
+    z-index: 20;
+    animation: fall var(--t) ease-in var(--dl) forwards;
+    opacity: 0;
+  }
+  @keyframes fall {
+    0% { opacity: 0; transform: translate3d(0, 0, 0) rotate(0); }
+    10% { opacity: .95; }
+    100% { opacity: .9; transform: translate3d(var(--x), 112vh, 0) rotate(var(--r)); }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    .page.enter-next, .page.enter-prev, .hero:not(.opened) .hero-tulip, .wiggle { animation: none; }
+    .tulip .stem, .tulip .leaf, .tulip .pl, .tulip .pr, .tulip .pc, .blossom .bloom-g, .blossom .stem2 { transition: none; }
+    .fall { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<header class="hero" id="hero">
+  <h1>Para kay Wifey Luvie</h1>
+  <p class="fullname">Kassandra Andrielle Borejon VillaLobos</p>
+  <button class="hero-tulip" id="heroTulip" type="button" aria-label="Buksan ang sulat"></button>
+  <p class="hint">Pindutin ang tulip</p>
+</header>
+
+<main class="book" id="book" hidden>
+
+  <!-- Page 1 -->
+  <section class="page" data-g="b:blush,t:pink,t:lilac,t:pink,b:blush">
+    <div class="garden"></div>
+    <p class="salutation">To my wifey luvie, my mahal, my favorite person. ♡</p>
+    <p>Mahal ko?</p>
+    <p>There's something I really want you to know, something I hope you can always remember, especially on the days when things get difficult between us or when life gets too overwhelming.</p>
+    <p>I want to assure you that I didn't choose to court you just to see where things would go. I didn't come into your life just to try things out, to entertain a possibility, or to see if maybe, someday, I could fall in love with you. The truth is, I pursued you because there's something about you that makes me want to stay, to understand you deeper, to love you more intentionally, and to build something meaningful with you. I didn't come here with the intention of looking around for someone better. I came here because I saw something in you that my heart genuinely wanted to choose.</p>
+    <p>And if there's one thing I want you to understand, it's that I'm not courting you because I'm unsure about you. I'm courting you because I want to be sure that when the time comes for us to finally call each other ours, I've loved you in a way that makes you feel safe, valued, understood, and genuinely chosen.</p>
+  </section>
+
+  <!-- Page 2 -->
+  <section class="page" data-g="t:lilac,b:pink,t:blush,b:pink,t:lilac">
+    <div class="garden"></div>
+    <p>I want us to arrive together, my love. Not just at the beginning, when everything feels exciting and beautiful, but also at the destination we've been quietly hoping and praying for. I want to be there through your highs and lows, through the days when you're proud of yourself and the days when you feel like you're not doing enough. I want to celebrate your little victories, listen to your frustrations, and hold space for the feelings you might not always know how to explain.</p>
+    <p>I know I can't control what the future holds for us. Hindi ko hawak ang tadhana, and I won't pretend that loving someone means we can guarantee that everything will always be easy. We have our own responsibilities, our own struggles, and our own battles to face. There might be days when we're tired, days when we misunderstand each other, and days when life demands more from us than we think we can give.</p>
+    <p>But, mahal, kahit hindi ko hawak ang tadhana, hawak ko ang pangako kong ikaw ang pipiliin ko, araw-araw, sa abot ng makakaya ko.</p>
+    <p>I cannot promise you a life without difficulties, but I want to promise you a love that doesn't run away the moment things become difficult. A love that communicates instead of assuming, understands instead of immediately judging, and listens instead of making you feel like your emotions are a burden. I want us to learn how to love each other better, even when we don't get everything right the first time.</p>
+  </section>
+
+  <!-- Page 3 -->
+  <section class="page" data-g="t:pink,t:orchid,b:lilac,t:orchid,t:pink">
+    <div class="garden"></div>
+    <p>And speaking of love, I hope you know how much I appreciate the little things you do for me.</p>
+    <p>I notice them, mahal. I really do.</p>
+    <p>I notice the way you reassure me, even through the little things you share on your Instagram story, the way you let your friends see that there's someone you're happy to have in your life. I notice your words of affirmation, the way you make me feel wanted without always having to say something grand. And even when those words become less frequent, I try to understand rather than immediately think that something has changed between us. I know you have academics to worry about, responsibilities to fulfill, and days when you're probably too exhausted to give everything the same energy you usually do.</p>
+    <p>And I want you to know that you don't have to feel guilty for being tired, my love.</p>
+    <p>You don't always have to be the sweetest version of yourself just to make me feel loved. You don't have to constantly prove your affection to keep me interested. You don't have to give me every ounce of your energy when you're already running low on your own.</p>
+    <p>I want to understand you, not become another responsibility you have to carry.</p>
+    <p>I want to be someone you can breathe around, someone you don't have to impress every single day, someone who understands that sometimes love looks like a long conversation, but sometimes it looks like simply being there after a tiring day. Sometimes it looks like sweet words and affectionate gestures, but sometimes it looks like giving each other the space to rest without questioning the love that remains.</p>
+  </section>
+
+  <!-- Page 4 -->
+  <section class="page" data-g="b:pink,t:lilac,t:blush,t:lilac,b:pink">
+    <div class="garden"></div>
+    <p>Of course, I love your words, your reassurance, and the way you make me feel special. But more than that, I want to understand the person behind all those beautiful gestures. I want to know when you're happy, when you're overwhelmed, when you need comfort, and when you simply need someone to listen without trying to fix everything.</p>
+    <p>Because I don't just want to love the things you do for me. I want to love you for who you are, even on the days when you don't have much to give.</p>
+    <p>And, mahal, can we talk about the way you make me feel loved?</p>
+    <p>The way you hug me, the way your hands gently scrunch my hair, those soft little taps on my head, your compliments, and the way you kiss my hand. Do you even realize how much those little things mean to me?</p>
+    <p>They make me feel so loved in ways I can't always explain. They bring out this side of me that wants to be softer with you, more affectionate, more expressive, and more willing to show you the love I sometimes struggle to put into words. There's something about your gentleness that makes me feel like I don't always have to be strong or have everything figured out. For a moment, I can simply be someone who is happy to be loved by you.</p>
+    <p>And I hope you feel that way with me, too.</p>
+    <p>I hope my presence gives you the same comfort that your presence gives me. I hope my words remind you that you're appreciated, that your efforts are seen, and that your feelings matter. I hope the way I treat you makes you feel like you don't have to compete for affection or question whether you're worthy of being loved.</p>
+    <p>Because you are, mahal. You really are.</p>
+  </section>
+
+  <!-- Page 5 -->
+  <section class="page" data-g="t:blush,b:lilac,t:pink,b:lilac,t:blush">
+    <div class="garden"></div>
+    <p>And I don't want you to think that I only see the beautiful things about you. I know that you're human. I know there will be parts of you that you might struggle to understand yourself, habits you might want to change, insecurities you might not be ready to share, and experiences from your past that may have shaped the person you are today.</p>
+    <p>I have my own flaws, too. There are things I might not immediately understand about myself, things I might need to work on, and moments when I won't know the perfect thing to say or do. I know that loving someone doesn't automatically make us perfect partners. Sometimes, we have to unlearn certain habits, acknowledge our mistakes, and make room for each other's growth.</p>
+    <p>So, mahal, I'm sorry for the times I might have done something that irritated you, hurt your feelings, or made you feel like I wasn't keeping up with you emotionally. I'm sorry for the moments when my actions might not have communicated what my heart intended. I may not always recognize immediately when something is bothering you, but I genuinely want to learn. I want you to feel comfortable telling me when something hurts, when something doesn't sit right with you, or when there's something you need from me that I haven't been giving.</p>
+    <p>I don't want you to feel like you have to hide your disappointments just to protect my feelings. Your feelings deserve to be heard, too. I want us to be honest with each other, even when the conversation isn't easy, because I'd rather understand what hurts you than unknowingly keep doing something that does.</p>
+  </section>
+
+  <!-- Page 6 -->
+  <section class="page" data-g="t:orchid,t:pink,b:blush,t:pink,t:orchid">
+    <div class="garden"></div>
+    <p>And if there's ever a moment when you feel like you're falling behind me, please remember that I'm not here to race against you, my love.</p>
+    <p>You don't have to keep up with me to deserve me. You don't have to become someone else just to be enough for me. We have different strengths, different struggles, and different ways of growing. I don't expect you to have everything figured out, and I hope you don't expect that from yourself, either.</p>
+    <p>I'd rather see us grow beside each other than watch you exhaust yourself trying to catch up with an imagined version of who you think you should be.</p>
+    <p>I want to be proud of you, not just for the things you accomplish, but also for the effort you make when nobody sees it. For the days when you're tired but still try. For the moments when you choose to be kind despite having your own struggles. For the times when you're learning, adjusting, and becoming a better version of yourself, even if the progress feels small.</p>
+    <p>You deserve to be appreciated for more than what you can offer. You're a person before you're anyone's partner, and I want to respect that part of you. Your dreams matter. Your education matters. Your peace matters. Your time with the people you love matters. Your individual growth matters.</p>
+    <p>I don't want my love to become something that makes your world smaller. I want it to be something that gives you more courage to experience it.</p>
+  </section>
+
+  <!-- Page 7 -->
+  <section class="page" data-g="b:lilac,t:blush,t:lilac,t:blush,b:lilac">
+    <div class="garden"></div>
+    <p>And when it comes to my own flaws, my bad sides, and the stories behind me that you might not know yet, I hope that when those parts of me eventually come to light, we can face them with honesty and understanding. I'm not asking you to ignore my mistakes or accept everything I do without question. You have every right to have boundaries, to express your concerns, and to decide what is right for you.</p>
+    <p>All I hope is that we give each other the chance to be understood beyond our worst moments, while still holding each other accountable for the things we need to change.</p>
+    <p>I don't expect you to love a perfect version of me, because that person doesn't exist. I want to become someone who continues to learn how to love you properly, someone who can acknowledge when he's wrong, someone who chooses growth over pride, and someone who doesn't make you feel like you have to beg for the bare minimum.</p>
+    <p>I want my love to be something you can feel in my consistency, not just something you read in my messages.</p>
+    <p>Because, mahal, words are beautiful, and I will never get tired of telling you how much I love you. But I also want my actions to give those words meaning. I want you to see the sincerity in the way I treat you, the respect I give you, the patience I practice with you, and the effort I make to understand you.</p>
+    <p>I want to keep learning your heart, even after I think I've memorized its language.</p>
+  </section>
+
+  <!-- Page 8 -->
+  <section class="page" data-g="t:pink,b:pink,t:orchid,b:pink,t:pink">
+    <div class="garden"></div>
+    <p>And if you ever have days when you question whether you're doing enough, I hope you remember that you don't need to earn your place in my heart by being perfect. If you need rest, rest. If you need reassurance, tell me. If something is bothering you, let me listen. If you're happy, let me celebrate with you. If you're struggling, you don't have to pretend everything is fine just because you don't want to worry me.</p>
+    <p>You don't have to carry everything alone just to prove that you're strong.</p>
+    <p>And please, mahal, never think that your worth becomes smaller on the days when you have less energy to give. I know life can be demanding, and I know that sometimes even the people who make us happiest are the people who are too tired to express everything they feel.</p>
+    <p>I want us to learn how to understand those moments without allowing unnecessary doubts to take away the beautiful things we're building.</p>
+    <p>I have faith in what I see in you, my love. Not because I believe you're flawless, but because I see someone worth knowing, someone worth understanding, and someone I genuinely want to keep choosing as I learn more about her.</p>
+    <p>I'm not here because I believe our story will always be easy. I'm here because I want to give our story a sincere chance. I want to discover the things we haven't discovered about each other yet, experience the memories we haven't made, and learn the lessons that will help us become better, both individually and together.</p>
+  </section>
+
+  <!-- Page 9 -->
+  <section class="page" data-g="t:lilac,t:blush,b:pink,t:blush,t:lilac">
+    <div class="garden"></div>
+    <p>And if you ask me what I hope for us, my answer will always be simple.</p>
+    <p>I hope it's you hanggang dulo.</p>
+    <p>I hope that one day, when the time is right and we've grown into the people we need to become, I can look at you and remember that this was the girl I once courted with a heart full of hope, the girl whose little gestures made me feel so loved, the girl I prayed for, and the girl I wanted to build a future with.</p>
+    <p>I hope that someday, we can look back at these days and smile because we made it through the uncertainties, the busy schedules, the misunderstandings, and all the little things we once worried about. I hope we can say that we didn't get everything right, but we kept learning how to get things right together.</p>
+    <p>And until that day comes, I want to keep showing you that my intentions are sincere.</p>
+    <p>I want to keep courting you with the same heart that made me pursue you in the first place, while learning to love you with more maturity, patience, and understanding as time goes on.</p>
+  </section>
+
+  <!-- Page 10 -->
+  <section class="page" data-g="b:blush,t:orchid,t:pink,t:orchid,b:blush">
+    <div class="garden"></div>
+    <p>I keep praying for you, for me, and for us. I pray that God gives us wisdom when we don't know what to do, patience when things get difficult, humility when we make mistakes, and the courage to communicate when silence would only make things harder.</p>
+    <p>I pray that if we're meant to walk this path together, we learn how to protect what we're building without losing ourselves in the process. I pray that our love becomes a place where we both feel safe enough to be honest, brave enough to grow, and secure enough to know that we don't have to be perfect to be loved.</p>
+    <p>And, my wifey luvie, if there's one thing I want you to take from this very long message, it's this:</p>
+    <p>You are appreciated beyond the things you do for me. You are valued beyond the reassurance you give me. You are loved for more than the moments when you make me happy. And you never have to become a perfect version of yourself just to deserve a genuine kind of love.</p>
+    <p>I see your efforts, mahal. I appreciate your gentleness. I cherish the way you make me feel loved. And I hope I can give you that same feeling, not only through these words, but through the way I choose to treat you every day.</p>
+    <p>Thank you for letting me be someone who gets to know you, care for you, and court you. Thank you for the little gestures you might think are ordinary but mean so much to me. Thank you for the happiness you bring into my days, and for giving me something beautiful to look forward to.</p>
+  </section>
+
+  <!-- Page 11 -->
+  <section class="page" data-g="t:pink,b:lilac,t:lilac,b:lilac,t:pink">
+    <div class="garden"></div>
+    <p>I don't know every detail of what the future holds, but I know that my intentions toward you are genuine. I want to keep choosing you with honesty, respect, loyalty, and a heart that's willing to learn.</p>
+    <p>So please, stay with me through the highs and lows, as long as we both continue to want this and choose each other. Let's give ourselves the chance to grow, to understand, and to build something we're both proud of.</p>
+    <p>Hindi ko man kayang ipangako kung ano ang magiging takbo ng lahat, pero kaya kong maging totoo sa nararamdaman ko at panindigan ang mga pangakong binitiwan ko. I will never promise to be perfect, mahal, but I want to keep becoming someone whose love makes you feel safe, respected, and genuinely cherished.</p>
+    <p>And if life gives us the chance to reach that beautiful day we've been hoping for, I hope I get to hold your hand and tell you that all those little moments, all those prayers, and all those days of choosing each other were worth it.</p>
+  </section>
+
+  <!-- Page 12 -->
+  <section class="page" data-burst data-g="b:blush,t:orchid,t:lilac,t:pink,t:blush,t:pink,t:lilac,t:orchid,b:blush">
+    <div class="garden big"></div>
+    <p>I love you, my mahal. I love you, my wifey luvie. And I hope that as you read this, you feel even a little of the warmth, sincerity, and happiness that you have given me.</p>
+    <p>I'm proud of you. I'm grateful for you. I'm rooting for you, always.</p>
+    <p>And if there's one place my heart hopes to arrive at someday, it's beside yours.</p>
+    <p>Ikaw lang palagi, mahal ko. Not because I know everything about tomorrow, but because today, I sincerely want to keep choosing you, learning you, and loving you the right way.</p>
+    <p>I love you so much, wifey luvie. Please take care of yourself, okay? You deserve the same gentleness you so freely give to others.</p>
+    <p class="closing">Hanggang dulo, kung papayagan at pipiliin din tayo ng panahon. Until then, let me keep loving you, one day at a time. ♡</p>
+  </section>
+
+</main>
+
+<nav class="nav" id="nav" hidden aria-label="Pahina">
+  <div class="progress" id="progress"></div>
+  <button class="btn prev" id="prev" type="button">Balik</button>
+  <span class="count" id="count" aria-live="polite">1 / 12</span>
+  <button class="btn next" id="next" type="button">Susunod</button>
+</nav>
+
+<script>
+(function () {
+  var COLORS = {
+    pink:   ['#F58FB5', '#E26A99'],
+    lilac:  ['#BA9BE8', '#9A78D3'],
+    blush:  ['#FFBFD8', '#F59BBE'],
+    orchid: ['#E39BD6', '#C873BC']
+  };
+
+  function tulipSVG(color, delay) {
+    var c = COLORS[color] || COLORS.pink;
+    return '<svg class="tulip" viewBox="0 0 100 160" style="--p1:' + c[0] + ';--p2:' + c[1] + ';--d:' + delay + 's" aria-hidden="true">' +
+      '<g class="sway">' +
+      '<path class="stem" pathLength="1" d="M50 152 C50 126 51 104 50 80"/>' +
+      '<path class="leaf" d="M50 146 C27 138 19 112 24 90 C40 102 49 122 50 146Z"/>' +
+      '<path class="leaf" d="M50 132 C73 126 81 104 77 84 C62 96 51 110 50 132Z"/>' +
+      '<path class="pl" d="M50 86 C27 84 19 58 25 32 C40 40 51 58 50 86Z"/>' +
+      '<path class="pr" d="M50 86 C73 84 81 58 75 32 C60 40 49 58 50 86Z"/>' +
+      '<path class="pc" d="M50 88 C33 79 35 48 50 20 C65 48 67 79 50 88Z"/>' +
+      '</g></svg>';
+  }
+
+  function blossomSVG(color, delay) {
+    var c = COLORS[color] || COLORS.pink;
+    var petals = '';
+    for (var i = 0; i < 5; i++) {
+      petals += '<ellipse class="bl" cx="30" cy="17" rx="8.5" ry="13" transform="rotate(' + (i * 72) + ' 30 32)"/>';
+    }
+    return '<svg class="blossom" viewBox="0 0 60 100" style="--p1:' + c[0] + ';--d:' + delay + 's" aria-hidden="true">' +
+      '<g class="sway">' +
+      '<path class="stem2" pathLength="1" d="M30 98 C30 82 31 64 30 44"/>' +
+      '<g class="bloom-g">' + petals + '<circle class="core" cx="30" cy="32" r="6"/></g>' +
+      '</g></svg>';
+  }
+
+  function buildGarden(page) {
+    var garden = page.querySelector('.garden');
+    var items = (page.getAttribute('data-g') || '').split(',');
+    var html = '';
+    items.forEach(function (item, i) {
+      var parts = item.split(':');
+      var delay = (i * 0.16).toFixed(2);
+      html += parts[0] === 'b' ? blossomSVG(parts[1], delay) : tulipSVG(parts[1], delay);
+    });
+    garden.innerHTML = html;
+    garden.addEventListener('click', function (e) {
+      var flower = e.target.closest('svg');
+      if (!flower) return;
+      var sway = flower.querySelector('.sway');
+      sway.classList.remove('wiggle');
+      void sway.getBoundingClientRect();
+      sway.classList.add('wiggle');
+    });
+  }
+
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  function burst(count) {
+    if (reduce) return;
+    var palette = ['#F58FB5', '#FFBFD8', '#BA9BE8', '#E39BD6', '#D9C4F5'];
+    for (var i = 0; i < count; i++) {
+      var p = document.createElement('span');
+      p.className = 'fall';
+      p.style.left = (Math.random() * 100) + 'vw';
+      p.style.setProperty('--s', (10 + Math.random() * 12) + 'px');
+      p.style.setProperty('--c', palette[Math.floor(Math.random() * palette.length)]);
+      p.style.setProperty('--t', (4 + Math.random() * 3.5) + 's');
+      p.style.setProperty('--dl', (Math.random() * 1.6) + 's');
+      p.style.setProperty('--x', ((Math.random() - 0.5) * 220) + 'px');
+      p.style.setProperty('--r', ((Math.random() - 0.5) * 900) + 'deg');
+      document.body.appendChild(p);
+      (function (el) { setTimeout(function () { el.remove(); }, 9500); })(p);
+    }
+  }
+
+  // Hero tulip
+  var hero = document.getElementById('hero');
+  var heroBtn = document.getElementById('heroTulip');
+  heroBtn.innerHTML = tulipSVG('pink', 0);
+
+  // Book
+  var book = document.getElementById('book');
+  var nav = document.getElementById('nav');
+  var pages = Array.prototype.slice.call(book.querySelectorAll('.page'));
+  var prevBtn = document.getElementById('prev');
+  var nextBtn = document.getElementById('next');
+  var count = document.getElementById('count');
+  var progress = document.getElementById('progress');
+  var current = -1;
+
+  pages.forEach(function (p) { p.hidden = true; buildGarden(p); });
+
+  function show(index, direction) {
+    if (index < 0 || index >= pages.length) return;
+    if (current >= 0) {
+      pages[current].classList.remove('active', 'enter-next', 'enter-prev');
+      pages[current].hidden = true;
+    }
+    current = index;
+    var page = pages[current];
+    page.hidden = false;
+    page.classList.add(direction === 'prev' ? 'enter-prev' : 'enter-next');
+    void page.offsetWidth;
+    page.classList.add('active');
+
+    count.textContent = (current + 1) + ' / ' + pages.length;
+    progress.style.width = ((current + 1) / pages.length * 100) + '%';
+    prevBtn.disabled = current === 0;
+    nextBtn.textContent = current === pages.length - 1 ? 'Basahin ulit' : 'Susunod';
+    window.scrollTo(0, 0);
+
+    if (page.hasAttribute('data-burst')) burst(34);
+  }
+
+  function next() {
+    if (current === pages.length - 1) { show(0, 'prev'); }
+    else { show(current + 1, 'next'); }
+  }
+  function prev() { if (current > 0) show(current - 1, 'prev'); }
+
+  nextBtn.addEventListener('click', next);
+  prevBtn.addEventListener('click', prev);
+
+  document.addEventListener('keydown', function (e) {
+    if (book.hidden) return;
+    if (e.key === 'ArrowRight') next();
+    if (e.key === 'ArrowLeft') prev();
+  });
+
+  var startX = 0, startY = 0;
+  document.addEventListener('touchstart', function (e) {
+    startX = e.changedTouches[0].clientX;
+    startY = e.changedTouches[0].clientY;
+  }, { passive: true });
+  document.addEventListener('touchend', function (e) {
+    if (book.hidden) return;
+    var dx = e.changedTouches[0].clientX - startX;
+    var dy = e.changedTouches[0].clientY - startY;
+    if (Math.abs(dx) > 70 && Math.abs(dx) > Math.abs(dy) * 1.6) {
+      if (dx < 0 && current < pages.length - 1) next();
+      if (dx > 0) prev();
+    }
+  }, { passive: true });
+
+  heroBtn.addEventListener('click', function () {
+    if (hero.classList.contains('opened')) return;
+    hero.classList.add('opened');
+    burst(26);
+    setTimeout(function () {
+      hero.hidden = true;
+      book.hidden = false;
+      nav.hidden = false;
+      show(0, 'next');
+    }, reduce ? 0 : 2200);
+  });
+})();
+</script>
+</body>
+</html>
